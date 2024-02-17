@@ -1,0 +1,98 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: rgb(20, 20, 20);
+  align-items: center;
+  min-height: 100vh;
+  display: flex;
+}
+body h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  color: white;
+}
+
+main {
+  margin-inline: auto;
+  max-width: 1000px;
+  width: 100%;
+}
+
+#board {
+  grid-template-columns: repeat(3, 1fr);
+  background-color: orange;
+  aspect-ratio: 1/1;
+  margin-inline: auto;
+  max-height: 80vh;
+  display: grid;
+  gap: 2px;
+}
+#board .square {
+  background-color: rgb(20, 20, 20);
+  transition-property: filter;
+  transition-duration: 0.1s;
+  position: relative;
+  aspect-ratio: 1/1;
+  cursor: pointer;
+}
+#board .square:hover {
+  filter: brightness(1.2);
+}
+#board [q]::after, #board [q]::before {
+  animation: toFullWidth 0.3s forwards;
+  transition-property: width;
+  transition-duration: 0.2s;
+  border-radius: 100%;
+  position: absolute;
+  display: block;
+  content: "";
+  width: 0;
+  left: 50%;
+  top: 50%;
+  --w: 80%;
+}
+#board [q]::after, #board [q][q=x]::before {
+  background-color: orange;
+}
+#board [q=x]::after, #board [q=x]::before {
+  transform: translate(-50%, -50%) rotateZ(var(--deg));
+  height: 5px;
+}
+#board [q=x]::after {
+  --deg: 45deg;
+}
+#board [q=x]::before {
+  --deg: -45deg;
+}
+#board [q=o]::after, #board [q=o]::before {
+  transform: translate(-50%, -50%);
+  aspect-ratio: 1/1;
+}
+#board [q=o]::before {
+  background-color: rgb(20, 20, 20);
+  --w: calc(80% - 5px);
+  z-index: 2;
+}
+
+@keyframes toFullWidth {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: var(--w);
+  }
+}
+button {
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  background-color: rgb(20, 20, 20);
+  margin-inline: auto;
+  border-radius: 20px;
+  padding: 10px 20px;
+  margin-top: 20px;
+  display: block;
+  color: white;
+}/*# sourceMappingURL=style.css.map */
