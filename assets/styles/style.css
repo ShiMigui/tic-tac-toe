@@ -24,7 +24,7 @@ main {
 
 #board {
   grid-template-columns: repeat(3, 1fr);
-  background-color: orange;
+  background-color: white;
   aspect-ratio: 1/1;
   margin-inline: auto;
   max-height: 75vh;
@@ -39,7 +39,7 @@ main {
   aspect-ratio: 1/1;
   cursor: pointer;
 }
-#board .square:hover {
+#board .square:hover, #board .square.select {
   filter: brightness(1.2);
 }
 #board [query]::after, #board [query]::before {
@@ -56,7 +56,7 @@ main {
   --w: 80%;
 }
 #board [query]::after, #board [query][query=x]::before {
-  background-color: orange;
+  background-color: white;
 }
 #board [query=x]::after, #board [query=x]::before {
   transform: translate(-50%, -50%) rotateZ(var(--deg));
@@ -95,8 +95,4 @@ button {
   margin-top: 20px;
   display: block;
   color: white;
-}
-
-[hidden] {
-  display: none !important;
 }/*# sourceMappingURL=style.css.map */

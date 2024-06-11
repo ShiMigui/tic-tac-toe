@@ -1,22 +1,31 @@
 import TicTacToe from "./TicTacToe.js";
 
-const game = () => {
-    // dom elements
+export const game = () => {
+    // DOM elements
+    const $board = document.getElementById("board");
     const $squares = document.querySelectorAll('.square');
     const $currentPlayer = document.getElementById('current-player');
     const $points = document.querySelectorAll("h2 span");
     const $restartButton = document.getElementById('restart');
 
-    // props
+    // Props
+    const _squaresArray = Array.from($squares);
     const _points = { x: 0, o: 0 }
     let _running = true;
 
-    // entity
+    // Entity
     const ticTacToe = TicTacToe.startANewGame();
 
-    // events
-    $squares.forEach((el, i) => el.addEventListener('click', () => selectSquare(i)));
+    // Event listeners
+    $board.addEventListener('click', handleBoardClick);
     $restartButton.addEventListener('click', restart);
+
+    updateCurrentPlayer();
+
+    function handleBoardClick(event) {
+        const index = _squaresArray.indexOf(event.target);
+        selectSquare(index);
+    }
 
     function restart() {
         ticTacToe.restart();
@@ -48,17 +57,18 @@ const game = () => {
         }
         catch (e) {
             alert(e);
+            console.error(e);
         }
     }
 
-    function updateCurrentPlayer(){
+    function updateCurrentPlayer() {
         $currentPlayer.innerText = ticTacToe.currentPlayer.toUpperCase();
     }
 
-    function updatePoints(){
+    function updatePoints() {
         $points[0].innerText = _points.x;
         $points[1].innerText = _points.o;
     }
-}
 
-game()
+    return { restart, $squares, selectSquare };
+}
