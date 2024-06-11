@@ -2,6 +2,7 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  color: white;
 }
 
 body {
@@ -10,10 +11,9 @@ body {
   min-height: 100vh;
   display: flex;
 }
-body h2 {
-  margin-bottom: 20px;
+body h1, body h2 {
   text-align: center;
-  color: white;
+  margin-bottom: 1em;
 }
 
 main {
@@ -27,7 +27,7 @@ main {
   background-color: orange;
   aspect-ratio: 1/1;
   margin-inline: auto;
-  max-height: 80vh;
+  max-height: 75vh;
   display: grid;
   gap: 2px;
 }
@@ -42,7 +42,7 @@ main {
 #board .square:hover {
   filter: brightness(1.2);
 }
-#board [q]::after, #board [q]::before {
+#board [query]::after, #board [query]::before {
   animation: toFullWidth 0.3s forwards;
   transition-property: width;
   transition-duration: 0.2s;
@@ -55,24 +55,24 @@ main {
   top: 50%;
   --w: 80%;
 }
-#board [q]::after, #board [q][q=x]::before {
+#board [query]::after, #board [query][query=x]::before {
   background-color: orange;
 }
-#board [q=x]::after, #board [q=x]::before {
+#board [query=x]::after, #board [query=x]::before {
   transform: translate(-50%, -50%) rotateZ(var(--deg));
   height: 5px;
 }
-#board [q=x]::after {
+#board [query=x]::after {
   --deg: 45deg;
 }
-#board [q=x]::before {
+#board [query=x]::before {
   --deg: -45deg;
 }
-#board [q=o]::after, #board [q=o]::before {
+#board [query=o]::after, #board [query=o]::before {
   transform: translate(-50%, -50%);
   aspect-ratio: 1/1;
 }
-#board [q=o]::before {
+#board [query=o]::before {
   background-color: rgb(20, 20, 20);
   --w: calc(80% - 5px);
   z-index: 2;
@@ -95,4 +95,8 @@ button {
   margin-top: 20px;
   display: block;
   color: white;
+}
+
+[hidden] {
+  display: none !important;
 }/*# sourceMappingURL=style.css.map */

@@ -1,49 +1,64 @@
+import TicTacToe from "./TicTacToe.js";
+
 const game = () => {
+    // dom elements
     const $squares = document.querySelectorAll('.square');
     const $currentPlayer = document.getElementById('current-player');
-    let _board = [], _q = '', _running = false;
+    const $points = document.querySelectorAll("h2 span");
+    const $restartButton = document.getElementById('restart');
 
-    $squares.forEach((el, i) => el.addEventListener('click', () => setSquareClicked(i)));
-    document.getElementById('restart').addEventListener('click', start);
+    // props
+    const _points = { x: 0, o: 0 }
+    let _running = true;
 
-    function start() {
-        $squares.forEach((el) => el.setAttribute('q', ''))
-        _board = ['', '', '', '', '', '', '', '', ''];
+    // entity
+    const ticTacToe = TicTacToe.startANewGame();
+
+    // events
+    $squares.forEach((el, i) => el.addEventListener('click', () => selectSquare(i)));
+    $restartButton.addEventListener('click', restart);
+
+    function restart() {
+        ticTacToe.restart();
+        updateCurrentPlayer();
+        for (let i = 0; i < $squares.length; i++) setSquareQuery(i, null);
+
         _running = true;
-        syncQuery('x');
     }
 
-    function setQuery(el) { el.setAttribute('q', _q) }
+    function setSquareQuery(index = 0, value = null) {
+        $squares[index].setAttribute('query', value);
+    }
 
-    function setSquareClicked(i) {
-        if (!_running || _board[i]) return;
+    function selectSquare(index = 0) {
+        if (!_running) return;
 
-        setQuery($squares[i]);
-        _board[i] = _q;
+        try {
+            let current = ticTacToe.currentPlayer;
+            ticTacToe.selectSquare(index);
+            setSquareQuery(index, current);
+            updateCurrentPlayer();
 
-        if (verifyVictory()) {
-            alert(`Victorious: ${_q}`);
-            _running = false;
-            return;
+            const winner = ticTacToe.victory();
+            if (winner) {
+                _points[winner] += 1;
+                _running = false;
+                updatePoints();
+            }
         }
-
-        syncQuery(_q == 'x' ? 'o' : 'x');
-    }
-
-    function syncQuery(q) {
-        $currentPlayer.innerText = q.toUpperCase();
-        _q = q;
-    }
-
-    function verifyVictory() {
-        for (let s of [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]) {
-            let first = _board[s[0]];
-            if (first !== '' && _board[s[1]] == first && _board[s[2]] == first) return true;
+        catch (e) {
+            alert(e);
         }
-        return false;
     }
 
-    return start;
+    function updateCurrentPlayer(){
+        $currentPlayer.innerText = ticTacToe.currentPlayer.toUpperCase();
+    }
+
+    function updatePoints(){
+        $points[0].innerText = _points.x;
+        $points[1].innerText = _points.o;
+    }
 }
 
-game()();
+game()

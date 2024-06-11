@@ -15,8 +15,9 @@ export default class TicTacToe {
     get currentPlayer() { return this._currentPlayer; }
 
     set squares(squares = []) {
-        if (squares.length != 9)
+        if (squares.length != 9) {
             throw new Error(`Board's squares number must be equal to 9! length: ${squares.length}`);
+        }
 
         this._squares = squares;
     }
@@ -30,6 +31,10 @@ export default class TicTacToe {
     restart() {
         this.squares.fill(null);
         this.currentPlayer = 'x';
+    }
+
+    static startANewGame(){
+        return new TicTacToe(new Array(9), 'x');
     }
 
     victory() {
@@ -46,9 +51,13 @@ export default class TicTacToe {
         this.currentPlayer = this.currentPlayer == 'x' ? 'o' : 'x';
     }
 
-    selectedSquare(squareIndex = 0) {
+    selectSquare(squareIndex = 0) {
         if (squareIndex < 0 || squareIndex > 8) {
-            throw new Error(`square index must be between 0 and 8! square index = ${squareIndex}`);
+            throw new Error(`Square index must be between 0 and 8! Square index = ${squareIndex}`);
+        }
+
+        if(this.squares[squareIndex] != null){
+            throw new Error(`Square is already taken by '${this.squares[squareIndex].toUpperCase()}'`);
         }
 
         this.squares[squareIndex] = this.currentPlayer;

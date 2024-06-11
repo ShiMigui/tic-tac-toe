@@ -5,6 +5,7 @@ $color: orange;
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+    color: white;
 }
 
 body {
@@ -12,10 +13,9 @@ body {
     align-items: center;
     min-height: 100vh;
     display: flex;
-    h2{
-        margin-bottom: 20px;
+    h1, h2{
         text-align: center;
-        color: white;
+        margin-bottom: 1em;
     }
 }
 
@@ -30,7 +30,7 @@ main {
     background-color: $color;
     aspect-ratio: 1 / 1;
     margin-inline: auto;
-    max-height: 80vh;
+    max-height: 75vh;
     display: grid;
     gap: 2px;
 
@@ -47,7 +47,7 @@ main {
         }
     }
 
-    [q]{
+    [query]{
         &::after, &::before{
             animation: toFullWidth .3s forwards;
             transition-property: width;
@@ -62,12 +62,12 @@ main {
             --w: 80%;
         }
 
-        &::after, &[q=x]::before{
+        &::after, &[query=x]::before{
             background-color: $color;
         }
     }
 
-    [q=x] {
+    [query=x] {
         &::after,
         &::before {
             transform: translate(-50%, -50%) rotateZ(var(--deg));
@@ -83,7 +83,7 @@ main {
         }
     }
 
-    [q=o]{
+    [query=o]{
         &::after, &::before{
             transform: translate(-50%, -50%);
             aspect-ratio: 1 / 1;
@@ -111,4 +111,8 @@ button{
     margin-top: 20px;
     display: block;
     color: white;
+}
+
+[hidden]{
+    display: none !important;
 }
